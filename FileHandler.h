@@ -15,7 +15,7 @@ class FileHandler{
         string fileName;
 
     private:
-        char commands[64] = { 'exe', 'cpp'};
+        char commands[64] = { '.exe', '.cpp'};
         
         void fileExec (char array[], int arrSize);
         void filePath (char array[], int arrSize);
