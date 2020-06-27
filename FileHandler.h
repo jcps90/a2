@@ -1,11 +1,17 @@
 #ifndef FILEHANDLER_H
 #define FILEHANDLER_H
 
+#include <msh.h> 
+
 #include <iostream>
-//#include <dirent.h>
+#include <dirent.h>
 #include <iterator>
 #include <string>
 #include <vector>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <cstring.h>
 
 using namespace std;
 
@@ -13,12 +19,14 @@ class FileHandler{
     public:
         string nFilePath;
         string fileName;
+        
+        void fileNameGet (char array[], int arrSize);
+        void filePathGet (char array[], int arrSize);
+        int  filePathCheck (string dir);
 
     private:
-        char commands[64] = { '.exe', '.cpp'};
-        
-        void fileExec (char array[], int arrSize);
-        void filePath (char array[], int arrSize);
+
+    string path;
 
 };
 
