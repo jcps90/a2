@@ -32,7 +32,7 @@ int FileHandler :: filePathCheck(string dir) {
 	DIR *fDir;
 	
 	fDir = opendir(dir.c_str());
-	if(fDir == nullptr) {
+	if(fDir == NULL) {
 		cout << endl << "Error opening directory " << dir  << endl;
 	}
 	
