@@ -2,6 +2,9 @@
 
 // microshell contstructor
 // pull in all necessary variables for running 
+
+
+
 msh::msh(void){
     char cwd[1024];
     currentUser = getenv("USER");
@@ -11,20 +14,19 @@ msh::msh(void){
 // clear terminal, print welcome statement for the user
 void msh::initShell(){
     clearLine();
-    printf("\n\n\tWelcome %s!", currentUser);
-    printf("\n\n");
+    cout << "\n\n\tWelcome!" <<  currentUser;
+    cout << "\n\n";
     sleep(1);
 }
-
 
 // pass through user input and return 
 int msh::recieveInput(char *userInput){
     //create an inputBuffer for the direct user input
     char inputBuf[MAXCHAR];
-    string outLine = "\n"+ currentUser + ":" + currentDir + "%";
+    //string outLine = "\n" + currentUser + ":" + currentDir + "%";
     //read into the buffer the user line with the prompt:
     //cssc9999:<current working directory>%
-    cout << outLine;
+    cout << "\n" << currentUser << ":" << currentDir << "%";
     cin.getline(inputBuf,MAXCHAR);
 
     // if there is input in the inputBuffer then we will add it to the 

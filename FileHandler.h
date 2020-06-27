@@ -1,9 +1,10 @@
 #ifndef FILEHANDLER_H
 #define FILEHANDLER_H
 
-#include <msh.h> 
+#include "msh.h" 
 
 #include <iostream>
+#include <stdlib.h>
 #include <dirent.h>
 #include <iterator>
 #include <string>
@@ -11,7 +12,6 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <cstring.h>
 
 using namespace std;
 

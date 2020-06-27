@@ -1,8 +1,9 @@
 #include "FileHandler.h"
 
 //exec funtion
-void FileHandler::fileNameGet (char array[], int arrSize){          //see if input has a file with an executable extension
-    for(int counter = 0; counter < arrSize; counter++){
+void FileHandler::fileNameGet (char array[], int arrSize){     
+    int counter;     //see if input has a file with an executable extension
+    for(counter = 0; counter < arrSize; counter++){
         if(array[counter] == NULL){ 
             while( array[counter-1] != '/' || array[counter-1] != NULL ){
                 fileName = array[counter-1];   //if executable extension is found gets the filename + its extension
@@ -68,4 +69,5 @@ int FileHandler :: filePathCheck(string dir) {
 	closedir(fDir);
 	
 	return 0;
-}//filePathChecker
+    }//filePathChecker
+}

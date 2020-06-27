@@ -29,7 +29,7 @@ class msh{
     public:
 
         //public variables
-        string currentUser;
+        char* currentUser;
         string currentDir;
         char userInput[MAXCHAR];
 
