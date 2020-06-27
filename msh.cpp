@@ -24,6 +24,7 @@ int msh::recieveInput(char *userInput){
     string outLine = "\n"+ currentUser + ":" + currentDir + "%";
     //read into the buffer the user line with the prompt:
     //cssc9999:<current working directory>%
+    cout << outLine;
     cin.getline(inputBuf,MAXCHAR);
 
     // if there is input in the inputBuffer then we will add it to the 
@@ -59,8 +60,7 @@ int msh::ParseDirectory(string dir) {
 	
 	tDir = opendir(dir.c_str());
 	if(tDir == nullptr) {
-		cerr << endl << "Error opening directory " << dir 
-			 << " (errno: " << errno << ")" << endl;
+		cerr << endl << "Error opening directory " << dir << endl; 
 		return errno;
 	}
 	

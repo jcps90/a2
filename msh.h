@@ -14,6 +14,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <cstddef>
 #include <readline/history.h>
 
 #define MAXCHAR 256
