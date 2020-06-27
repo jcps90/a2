@@ -10,26 +10,26 @@ msh::msh(void){
 
 // clear terminal, print welcome statement for the user
 void msh::initShell(){
-    clear();
+    clearLine();
     printf("\n\n\tWelcome %s!", currentUser);
     printf("\n\n");
     sleep(1);
 }
 
+
 // pass through user input and return 
 int msh::recieveInput(char *userInput){
     //create an inputBuffer for the direct user input
-    char* inputBuf;
+    char inputBuf[MAXCHAR];
     string outLine = "\n"+ currentUser + ":" + currentDir + "%";
     //read into the buffer the user line with the prompt:
     //cssc9999:<current working directory>%
-    inputBuf = readline(outLine);
+    cin.getline(inputBuf,MAXCHAR);
 
     // if there is input in the inputBuffer then we will add it to the 
     // command history so it may be referenced later
     // we then save the inputBuffer to userInput
     if (strlen(inputBuf) != 0){
-        add_history(inputBuf);
         strcpy(userInput, inputBuf);
         return 0;
     }
@@ -52,4 +52,42 @@ void msh::cmdLineLoop(){
         }
     }
     
+}
+
+int msh::ParseDirectory(string dir) {
+	DIR *tDir;
+	
+	tDir = opendir(dir.c_str());
+	if(tDir == nullptr) {
+		cerr << endl << "Error opening directory " << dir 
+			 << " (errno: " << errno << ")" << endl;
+		return errno;
+	}
+	
+	struct dirent *dirP;
+	struct stat filestat;
+	string path;
+	while( (dirP = readdir(tDir)) ) {
+		//Skip current object if it is this directory or parent directory
+		if(!strncmp(dirP->d_name, ".", 1) || !strncmp(dirP->d_name, "..", 2))
+			continue;
+		
+		if(dir==".") path = dirP->d_name;
+		else		 path = dir + "/" + dirP->d_name;
+		
+		//Skip current file / directory if it is invalid in some way
+		if(stat(path.c_str(), &filestat)) continue;
+		
+		//Recursively call this function if current object is a directory
+		if(S_ISDIR(filestat.st_mode)) {
+			ParseDirectory(path);
+			continue;
+		}
+		
+		//At this position you can check if the current file (path) is the file you are searching
+	}
+	
+	closedir(tDir);
+	
+	return 0;
 }
