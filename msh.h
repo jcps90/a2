@@ -46,9 +46,6 @@ class msh{
     int recieveInput(char *userInput);
 
     void setCWD();
-
-    int ParseDirectory(string dir);
-
 };
 
 #endif
