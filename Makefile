@@ -10,7 +10,7 @@
 EXEC = msh
 CC=g++
 $(EXEC):
-	$(CC) -o $(EXEC) main.cpp msh.cpp FileHandler.cpp -lpthread
+	$(CC) -o $(EXEC) main.cpp msh.cpp FileHandler.cpp
 	rm -f *.o
 clean:
 	rm msh

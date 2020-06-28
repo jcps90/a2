@@ -1,7 +1,7 @@
 #ifndef MSH_H
 #define MSH_H
 
-#include "FileValidate.h"
+#include "FileHandler.h"
 //#include "FileHandler.h"
 // ^ already includes: 
 //  <string.h>
@@ -15,7 +15,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <cstddef>
-#include <readline/history.h>
 
 #define MAXCHAR 256
 
@@ -24,6 +23,8 @@
 // [H to move the cursor to the upper left corner and [J to clear from
 // the cursor down.
 #define clearLine() printf("\033[H\033[J")
+
+using namespace std;
 
 class msh{
     public:

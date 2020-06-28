@@ -47,10 +47,12 @@ void exitShell(){
 }
 
 void msh::cmdLineLoop(){
+    int exeFlag;
     initShell();
-
+    
     while(1){
         if(recieveInput(userInput)){
+            cout << userInput;
             continue;
         }
     }
