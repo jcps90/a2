@@ -8,9 +8,7 @@ Filename: FileFunctions.cpp
 
 #include "main.h"
 
-
-
-PipeStatus parseCommand(int argc, char** userInput, char** lhBuff, char** rhBuff) {     // lhBuff and rhBuff will only be populated if there is a pipe.
+PipeStatus parseCommand(int argc, char** userInput, char** lhBuff, char** rhBuff) {     // lhBuff and rhBuff will only be populated if there is a pipe. Mikhail Mineev
   PipeStatus status = NOPIPE;               //pipe status begins as a NOPIPE
   int pipLoc = -1;                          // pipLoc will keep track of where the pipe is located.   
 
@@ -39,7 +37,7 @@ PipeStatus parseCommand(int argc, char** userInput, char** lhBuff, char** rhBuff
 }
 
 
-void pipeCmd(char** lhBuff, char** rhBuff){ //pipes the lhBuff onto the rhBuff
+void pipeCmd(char** lhBuff, char** rhBuff){ //pipes the lhBuff onto the rhBuff     Juan Pina-Sanz
   int fds[2]; // file descriptors
   pipe(fds);
   pid_t pid;
@@ -69,7 +67,7 @@ void pipeCmd(char** lhBuff, char** rhBuff){ //pipes the lhBuff onto the rhBuff
 // read the input from the user and pass it though to the array that holds
 // the all inputs to be split by the parseCommand
 // this function will also prompt the user to start using the microshell
-int readArgs(char **userInput){
+int readArgs(char **userInput){                 //Mikhail Mineev
   char *newString;
   string inputArg;
   int argc = 0;
@@ -108,7 +106,7 @@ int readArgs(char **userInput){
 }
 
 // For single input of arguments this will fork a new process and run those arguments.
-void runCmd(char** userInput){
+void runCmd(char** userInput){                 //Juan Pina-Sanz
   pid_t pid;
 
   // Fork process
@@ -127,8 +125,8 @@ void runCmd(char** userInput){
 }
 
                                                     
-bool quitShell(string choice) {                     // provided with an input, this determines whether or not the user wants to exit the shell. 
-                                                                                        
+bool quitShell(string choice) {                      //Juan Pina-Sanz
+                                                     // provided with an input, this determines whether or not the user wants to exit the shell.                                   
     for (unsigned int i=0; i<choice.length(); i++){  // ensure that both EXIT and exit are valid for closing the shell
        choice[i] = tolower(choice[i]);
      }
