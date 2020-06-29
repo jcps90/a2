@@ -11,7 +11,9 @@ Filename: README
 
 File Manifest: Makefile main.cpp main.h README.md FileHandler.cpp
 
-Compile Instructions: Compile and Run on Class Account cssc2147
+Run on Class Account cssc2147 
+
+Compile Instructions: Compile using make
 
 Operation Instructions: The MicroShell will output a prompt initially, and despite there not being another one after the first command is entered, it will still accept commands afterwards.
 
