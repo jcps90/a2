@@ -11,50 +11,50 @@ Filename: FileFunctions.cpp
 // Based on the number of arguments and the size of the argument array we
 // will go through those arguments and update the status of the Pipe
 // to whether there is a pipe to a file, or none.
-// cmd1 and cmd2 will only be populated if there is a pipe.
-PipeStatus parse_command(int argc, char** argv, char** cmd1, char** cmd2) {
+// lhBuff and rhBuff will only be populated if there is a pipe.
+PipeStatus parse_command(int argc, char** userInput, char** lhBuff, char** rhBuff) {
   // Start by assuming there are no pipes
-  PipeStatus result = NOPIPE;
+  PipeStatus status = NOPIPE;
 
-  // split will keep track of where the pipe is located.
-  int split = -1;
+  // pipLoc will keep track of where the pipe is located.
+  int pipLoc = -1;
 
   // Go through the array of arguments...
   for (int i=0; i<argc; i++) {
     // Pipe found!
-    if (strcmp(argv[i], "|") == 0) {
-      result = PIPE;
-      split = i;
+    if (strcmp(userInput[i], "|") == 0) {
+      status = PIPE;
+      pipLoc = i;
   }
 
   // If a pipe was found...
-  if (result != NOPIPE) {
+  if (status != NOPIPE) {
     // Go through the array of arguments up to the point where the
-    // pipe was found and store each of those arguments in cmd1.
-    for (int i=0; i<split; i++)
-      cmd1[i] = argv[i];
+    // pipe was found and store each of those arguments in lhBuff.
+    for (int i=0; i<pipLoc; i++)
+      lhBuff[i] = userInput[i];
 
     // Go through the array of arguments from the point where the pipe
     // was found through the end of the array of arguments and store each
-    // argument in cmd2.
+    // argument in rhBuff.
     int count = 0;
-    for (int i=split+1; i<argc; i++) {
-      cmd2[count] = argv[i];
+    for (int i=pipLoc+1; i<argc; i++) {
+      rhBuff[count] = userInput[i];
       count++;
     }
 
-    // Terminate cmd1 and cmd2 with NULL, so that execvp likes them.
-    cmd1[split] = NULL;
-    cmd2[count] = NULL;
+    // Terminate lhBuff and rhBuff with NULL, so that execvp likes them.
+    lhBuff[pipLoc] = NULL;
+    rhBuff[count] = NULL;
   }
 
   // Return an enum showing whether a pipe was found or not
-    return result;
+    return status;
     }
 }
 
-// This pipes the output of cmd1 into cmd2.
-void pipe_cmd(char** cmd1, char** cmd2){
+// This pipes the output of lhBuff into rhBuff.
+void pipeCmd(char** lhBuff, char** rhBuff){
   int fds[2]; // file descriptors
   pipe(fds);
   pid_t pid;
@@ -69,7 +69,7 @@ void pipe_cmd(char** cmd1, char** cmd2){
     close(fds[1]);
 
     // Execute the second command.
-    execvp(cmd2[0], cmd2);
+    execvp(rhBuff[0], rhBuff);
     perror("execvp failed");
 
   // child process #2
@@ -82,7 +82,7 @@ void pipe_cmd(char** cmd1, char** cmd2){
     close(fds[0]);
 
     // Execute the first command.
-    execvp(cmd1[0], cmd1);
+    execvp(lhBuff[0], lhBuff);
     perror("execvp failed");
 
   // parent process
@@ -90,12 +90,12 @@ void pipe_cmd(char** cmd1, char** cmd2){
     waitpid(pid, NULL, 0);
 }
 
-// This will get input from the user, split the input into arguments, insert
+// This will get input from the user, pipLoc the input into arguments, insert
 // those arguments into the given array, and return the number of arguments as
 // an integer.
-int readArgs(char **argv){
-  char *cstr;
-  string arg;
+int readArgs(char **userInput){
+  char *newString;
+  string inputArg;
   int argc = 0;
   //Display a prompt
   char cwd[1024];
@@ -103,16 +103,16 @@ int readArgs(char **argv){
   string currentDir = getcwd(cwd, sizeof(cwd));
   cout << "\n" << currentUser << ":" << currentDir << "% ";
   // Read in arguments till the user hits enter
-  while (cin >> arg) {
+  while (cin >> inputArg) {
     // Let the user exit out if their input suggests they want to.
-    if (quitShell(arg)) {
+    if (quitShell(inputArg)) {
       exit(0);
     }
 
     // Convert that std::string into a C string.
-    cstr = new char[arg.size()+1];
-    strcpy(cstr, arg.c_str());
-    argv[argc] = cstr;
+    newString = new char[inputArg.size()+1];
+    strcpy(newString, inputArg.c_str());
+    userInput[argc] = newString;
 
     // Increment our counter of where we're at in the array of arguments.
     argc++;
@@ -123,15 +123,15 @@ int readArgs(char **argv){
   }
 
   // Have to have the last argument be NULL so that execvp works.
-  argv[argc] = NULL;
+  userInput[argc] = NULL;
 
   // Return the number of arguments we got.
   return argc;
 }
 
-// Given the number of arguments (argc) and an array of arguments (argv),
+// Given the number of arguments (argc) and an array of arguments (userInput),
 // this will fork a new process and run those arguments.
-void runCmd(int argc, char** argv) {
+void runCmd(int argc, char** userInput) {
   pid_t pid;
 
   // Fork our process
@@ -143,7 +143,7 @@ void runCmd(int argc, char** argv) {
 
   // child process
   else if (pid == 0) {
-    execvp(argv[0], argv);
+    execvp(userInput[0], userInput);
     perror("execvp error");
   // parent process
   }

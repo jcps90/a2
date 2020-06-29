@@ -28,7 +28,7 @@ int main() {
 
     // Determine how to handle the user's command(s).
     if (pipe_status == PIPE)          // piping
-      pipe_cmd(cmd1, cmd2);
+      pipeCmd(cmd1, cmd2);
     else
       runCmd(argc, argv);              // neither
     // Reset the argv array for next time.

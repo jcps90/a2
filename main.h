@@ -37,7 +37,7 @@ void runCmd(int, char**);
 // quit the shell.
 bool quitShell(string);
 
-void pipe_cmd(char**, char**);  //pipes the output of the first program onto the second program
+void pipeCmd(char**, char**);  //pipes the output of the first program onto the second program
 
 
 
