@@ -1,3 +1,11 @@
+/*
+Authors: Juan Pina-Sanz, Mikhail Mineev
+Users: cssc2147, cssc2160
+Class: CS 570, Summer 2020
+Assignment 2
+Filename: FileFunctions.cpp
+*/
+
 #include "main.h"
 
 // Given the number of arguments (argc) in an array of arguments (argv), this
@@ -149,5 +157,10 @@ bool quitShell(string choice) {
     for (unsigned int i=0; i<choice.length(); i++){
        choice[i] = tolower(choice[i]);
      }
+<<<<<<< HEAD
      return (choice == "exit");
 }
+=======
+     return (choice == "quit" || choice == "exit");
+}
+>>>>>>> 004070747ef82b4abdbb4b955bed60b3402723cd
