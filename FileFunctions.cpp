@@ -86,16 +86,19 @@ void pipe_cmd(char** cmd1, char** cmd2){
 // This will get input from the user, split the input into arguments, insert
 // those arguments into the given array, and return the number of arguments as
 // an integer.
-int read_args(char **argv){
+int readArgs(char **argv){
   char *cstr;
   string arg;
   int argc = 0;
-
+  //Display a prompt
+  char cwd[1024];
+  char *currentUser = getenv("USER");
+  string currentDir = getcwd(cwd, sizeof(cwd));
+  cout << "\n" << currentUser << ":" << currentDir << "% ";
   // Read in arguments till the user hits enter
   while (cin >> arg) {
     // Let the user exit out if their input suggests they want to.
-    if (want_to_quit(arg)) {
-      cout << "Goodbye!\n";
+    if (quitShell(arg)) {
       exit(0);
     }
 
@@ -119,59 +122,9 @@ int read_args(char **argv){
   return argc;
 }
 
-void redirect_cmd(char** cmd, char** file){
-  int fds[2]; // file descriptors
-  int count;  // used for reading from stdout
-  int fd;     // single file descriptor
-  char c;     // used for writing and reading a character at a time
-  pid_t pid;  // will hold process ID; used with fork()
-
-  pipe(fds);
-
-  // child process #1
-  if (fork() == 0) {
-
-    fd = open(file[0], O_RDWR | O_CREAT, 0666);
-
-    // open() returns a -1 if an error occurred
-    if (fd < 0) {
-      printf("Error: %s\n", strerror(errno));
-      return;
-    }
-
-    dup2(fds[0], 0);
-
-    // Don't need stdout end of pipe.
-    close(fds[1]);
-
-    // Read from stdout...
-    while ((count = read(0, &c, 1)) > 0)
-      write(fd, &c, 1); // Write to file.
-
-    execlp("echo", "echo", NULL);
-
-  // child process #2
-  } else if ((pid = fork()) == 0) {
-    dup2(fds[1], 1);
-
-    // Don't need stdin end of pipe.
-    close(fds[0]);
-
-    // Output contents of the given file to stdout.
-    execvp(cmd[0], cmd);
-    perror("execvp failed");
-
-  // parent process
-  } else {
-    waitpid(pid, NULL, 0);
-    close(fds[0]);
-    close(fds[1]);
-  }
-}
-
 // Given the number of arguments (argc) and an array of arguments (argv),
 // this will fork a new process and run those arguments.
-void run_cmd(int argc, char** argv) {
+void runCmd(int argc, char** argv) {
   pid_t pid;
 
   // Fork our process
@@ -191,10 +144,10 @@ void run_cmd(int argc, char** argv) {
 
 // Given a string of user input, this determines whether or not the user
 // wants to exit the shell.
-bool want_to_quit(string choice) {
+bool quitShell(string choice) {
     // Lowercase the user input
     for (unsigned int i=0; i<choice.length(); i++){
        choice[i] = tolower(choice[i]);
      }
-     return (choice == "quit" || choice == "exit");
+     return (choice == "exit");
 }
