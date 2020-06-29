@@ -16,7 +16,7 @@ int main() {                                                          //takes an
   while (1) {
                                                                       // Reads in the command from the user.
     argc = readArgs(userInput);
-    pipe_status = parse_command(argc, userInput, lhBuff, rhBuff);     //reads the userInput and decides if it is necissary to split into left and rigth buffs.
+    pipe_status = parseCommand(argc, userInput, lhBuff, rhBuff);     //reads the userInput and decides if it is necissary to split into left and rigth buffs.
                                                                       //will give a PIPE or NOPIPE enum
     if (pipe_status == PIPE)                                          //PIPE
       pipeCmd(lhBuff, rhBuff);
@@ -24,7 +24,7 @@ int main() {                                                          //takes an
       runCmd(argc, userInput);                                        //NOPIPE
                                                                       
     for (int i=0; i<argc; i++)                                        //resets userInput for the next input
-      auserInput[i] = NULL;
+      userInput[i] = NULL;
   }
   return 0;
 }
