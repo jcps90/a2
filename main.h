@@ -25,17 +25,11 @@ enum PipeStatus {PIPE, NOPIPE}; //assign the enumirator of PIPE if '|' is found 
 
 PipeStatus parse_command(int, char**, char**, char**);  //allows to use a pipe or just a filename
 
-// Reads input from the user into the given array and returns the number of
-// arguments taken in.
-int readArgs(char**);
+int readArgs(char**);         //reads in userInput into an array and returns the num or arg elements
 
-// Given the number of arguments and an array of arguments, this will execute
-// those arguments.  The first argument in the array should be a command.
-void runCmd(int, char**);
+void runCmd(int, char**);     //given number of args and the args array will execute the arguments 
 
-// Given a string of user input, this will determine if the user wants to
-// quit the shell.
-bool quitShell(string);
+bool quitShell(string);        //given an input will see if user wants to quit from the microshell
 
 void pipeCmd(char**, char**);  //pipes the output of the first program onto the second program
 
