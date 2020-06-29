@@ -157,10 +157,5 @@ bool quitShell(string choice) {
     for (unsigned int i=0; i<choice.length(); i++){
        choice[i] = tolower(choice[i]);
      }
-<<<<<<< HEAD
      return (choice == "exit");
 }
-=======
-     return (choice == "quit" || choice == "exit");
-}
->>>>>>> 004070747ef82b4abdbb4b955bed60b3402723cd

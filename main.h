@@ -25,7 +25,6 @@ enum PipeStatus {PIPE, NOPIPE}; //assign the enumirator of PIPE if '|' is found 
 
 PipeStatus parse_command(int, char**, char**, char**);  //allows to use a pipe or just a filename
 
-<<<<<<< HEAD
 // Reads input from the user into the given array and returns the number of
 // arguments taken in.
 int readArgs(char**);
@@ -37,12 +36,8 @@ void runCmd(int, char**);
 // Given a string of user input, this will determine if the user wants to
 // quit the shell.
 bool quitShell(string);
-=======
+
 void pipe_cmd(char**, char**);  //pipes the output of the first program onto the second program
 
-int read_args(char**);          //takes userInput into an array and returns the num of arguments 
 
-void run_cmd(int, char**);      //takes in the number of arguments and the array of args. runs the args
 
-bool want_to_quit(string);      //exit condition
->>>>>>> 004070747ef82b4abdbb4b955bed60b3402723cd

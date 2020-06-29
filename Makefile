@@ -7,10 +7,10 @@
 # Filename: Makefile
 #
 #######################################################
-msh: main.o FileFunctions.o
-	g++ -o msh main.o FileFunctions.o; rm *.o
-functions.o: FileFunctions.cpp main.h
-	g++ -Wall -c FileFunctions.cpp
+msh: main.o FileHandler.o
+	g++ -o msh main.o FileHandler.o; rm *.o
+functions.o: FileHandler.cpp main.h
+	g++ -Wall -c FileHandler.cpp
 main.o: main.cpp main.h
 	g++ -Wall -c main.cpp
 ####################[ EOF: Makefile ]##################
