@@ -19,11 +19,11 @@ Filename: main.h
 #include <sys/wait.h>
 using namespace std;
 
-const int MAX_ARGS = 256;       //maximum array size
+const int MAXCHAR = 256;       //maximum array size
 
 enum PipeStatus {PIPE, NOPIPE}; //assign the enumirator of PIPE if '|' is found otherwise NOPIPE 
 
-PipeStatus parse_command(int, char**, char**, char**);  //allows to use a pipe or just a filename
+PipeStatus parseCommand(int, char**, char**, char**);  //allows to use a pipe or just a filename
 
 int readArgs(char**);         //reads in userInput into an array and returns the num or arg elements
 
