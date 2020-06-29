@@ -92,11 +92,12 @@ int readArgs(char **userInput){
     userInput[argc] = newString;
 
     // update our argument counter.
-    argc++
+    argc++;
 
     // stop accepting input after hitting enter.
-    if (cin.get() == '\n')
+    if (cin.get() == '\n'){
       break;
+    }
   }
 
   // Have to have the last argument be NULL so that execvp works.
