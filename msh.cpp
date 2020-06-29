@@ -25,7 +25,37 @@ void msh::clearUserInput(){
     }
 }
 
+/*
+int msh::recieveInput(char **userInput) {
+  char *cstr;
+  string arg;
+  int argc = 0;
+
+  // Read in arguments till the user hits enter
+  while (cin >> arg) {
+    // Let the user exit out if their input suggests they want to.
+    // Convert that std::string into a C string.
+    cstr = new char[arg.size()+1];
+    strcpy(cstr, arg.c_str());
+    userInput[argc] = cstr;
+
+    // Increment our counter of where we're at in the array of arguments.
+    argc++;
+
+    // If the user hit enter, stop reading input.
+    if (cin.get() == '\n')
+      break;
+  }
+  cout << userInput << "\n";
+  // Have to have the last argument be NULL so that execvp works.
+  argv[argc] = NULL;
+
+  // Return the number of arguments we got.
+  return argc;
+}*/
+
 // pass through user input and return 
+
 int msh::recieveInput(char *userInput){
     //create an inputBuffer for the direct user input
     char inputBuf[MAXCHAR];
@@ -54,6 +84,7 @@ void exitShell(){
 
 void msh::pipeCount(){
 	int i = 0;
+    pipeCounter = 0;
     char pipe = '|';
     while( userInput[i+1] != NULL){
             //cout << pipeCounter << "\t";
@@ -86,9 +117,12 @@ void msh::caseTwo(){
     cout << "caseTwo PipeLoc preClear: " << pipeLocation[0] << "\n";
 	for(int i = 0; i < MAXCHAR; i++){
         lhBuff[i] = '\0';
-        rhBuffer[i] = '\0';
+        rhBuff[i] = '\0';
         }
+        
+    cout << "rhBuff contains: " << rhBuff << "\n";
     pipeCount();
+
     cout << "caseTwo PipeLoc postClear: " << pipeLocation[0] << "\n";
     int k = pipeLocation[0];
     int c = k+1;
@@ -107,15 +141,18 @@ void msh::caseTwo(){
       	lhBuff[i] = userInput[i];
     }
     cout << "Case Two print lhbuff: " << lhBuff << "\n";
-    cout << "rhBuffer array Addr: " << &rhBuffer << "\n";
-    
+    cout << "rhBuff array Addr: " << &rhBuff << "\n";
+
+    getrhBuf();
+    /*
     while( userInput[c] != NULL){
-        cout << "userInput = " << userInput[c] << "\n";
-        cout << "Case Two print rhbuff[c]: " << rhBuff[c] << "\n";
         cout << "c = " << c << "\n";
+        cout << "userInput = " << userInput[c] << "\n";
+        cout << "rhBuff array Addr: " << &rhBuff[c] << "\n";
+        cout << "Case Two print rhbuff[c]: " << rhBuff[c] << "\n";
         rhBuff[c] = userInput[c];
         c++;
-        }
+        }*/
       
 
 }//case 2 
@@ -126,8 +163,7 @@ void msh::caseThree(){
 	for(int i = 0; i < MAXCHAR; i++){
      lhBuff[i] = '\0';
     }
-    pipeCount();
-	int i = 0;
+	int i = 0;;
     // copy right hand buffer into left hand buffer	
     while( rhBuff[i] != NULL){ 
     lhBuff[i] = rhBuff[i];
@@ -143,10 +179,12 @@ void msh::caseThree(){
     while( pipeLocation[currentPipe] != NULL){
       	int k = pipeLocation[currentPipe];
         int m = pipeLocation[currentPipe+1];
-       	for(k; k < m; k++){
-        	rhBuff[k] = userInput[k];
-        }
-        break;  
+       	int i = 0;
+       		for(k; k < m; k++){
+        		rhBuff[i] = userInput[k];
+                i++;
+            }
+          break;  
     }
     currentPipe++; 
 } //case 3   
@@ -162,8 +200,19 @@ int msh::caseDecider(){
         cout << "CD: 3/ " << pipeCounter << "\n";
     	return 3; //case 3
     }
-    
 }
+
+  void msh::getrhBuf(){
+  	int v = pipeLocation[0];
+    int d = v+1;
+    int i=0;
+    while( userInput[d] != NULL){
+        	rhBuff[i] = userInput[d];
+          d++;
+          i++;
+        } 
+    
+  }
 
 void msh::cmdLineLoop(){
     int exeFlag;
@@ -172,6 +221,7 @@ void msh::cmdLineLoop(){
         if(recieveInput(userInput)){
             continue;
         }
+
         pipeCount();
         exeFlag = caseDecider();
         cout << "cmdLineLoop pipeLocation " << pipeLocation[0] << "\n";
@@ -190,7 +240,6 @@ void msh::cmdLineLoop(){
             cout << "rhbuff = " << rhBuff << "\n";
 
         }else if(exeFlag == 3){
-
             caseTwo();
             cout << "Case Two + " << "\n";
             cout << "lhbuff = " << lhBuff << "\n";

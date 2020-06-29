@@ -36,7 +36,6 @@ class msh{
         char userInput[256];
         char lhBuff[BUFFSIZE];
         char rhBuff[BUFFSIZE];
-        char rhBuffer[64];
         int pipeLocation[32];
         int pipeCounter;
         int currentPipe = 1;
@@ -57,12 +56,10 @@ class msh{
         void caseOne();
         void caseTwo();
         void caseThree();
-
         int caseDecider();
+        void getrhBuf();
 
     void setCWD();
 };
 
 #endif
-
-
