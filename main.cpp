@@ -8,34 +8,23 @@ Filename: main.cpp
 
 #include "main.h"
 
-// Takes user input until they quit the shell, and passes that input as
-// arguments to be run.
-int main() {
-  char *argv[MAX_ARGS], *cmd1[MAX_ARGS], *cmd2[MAX_ARGS];
+int main() {                                                //takes and runs userInput until the user enters the 'quit' command
+  char *userInput[MAX_ARGS], *lhBufF[MAX_ARGS], *rhBuff[MAX_ARGS];
   PipeStatus pipe_status;
   int argc;
 
-  // Keep returning the user to the prompt ad infinitum unless they enter
-  // 'quit' or 'exit' (without quotes).
   while (1) {
-    // Read in a command from the user.
-    argc = readArgs(argv);
-
-    // Decipher the command we just read in and split it, if necessary, into
-    // cmd1 and cmd2 arrays.  Set pipe_redirect to a PipeRedirect enum value to
-    // indicate whether the given command pipes, redirects, or does neither.
-    pipe_status = parse_command(argc, argv, cmd1, cmd2);
-
-    // Determine how to handle the user's command(s).
-    if (pipe_status == PIPE)          // piping
-      pipeCmd(cmd1, cmd2);
+                                                                       // Reads in the command from the user.
+    argc = readArgs(userInput);
+    pipe_status = parse_command(argc, userInput, lhBuff, rhBuff);     //reads the userInput and decides if it is necissary to split into left and rigth buffs.
+                                                                      //will give a pipe or nopipe enum
+    if (pipe_status == PIPE)                                          //PIPE
+      pipeCmd(lhBuff, rhBuff);
     else
-      runCmd(argc, argv);              // neither
+      runCmd(argc, userInput);                                        //NOPIPE
     // Reset the argv array for next time.
     for (int i=0; i<argc; i++)
-      argv[i] = NULL;
+      auserInput[i] = NULL;
   }
-
-  // Let the OS know everything is a-okay.
   return 0;
 }
