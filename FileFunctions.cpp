@@ -1,3 +1,11 @@
+/*
+Authors: Juan Pina-Sanz, Mikhail Mineev
+Users: cssc2147, cssc2160
+Class: CS 570, Summer 2020
+Assignment 2
+Filename: FileFunctions.cpp
+/*
+
 #include "main.h"
 
 // Given the number of arguments (argc) in an array of arguments (argv), this
