@@ -11,29 +11,16 @@
 #include <sys/wait.h>
 using namespace std;
 
-// Will be used to create an array to hold individual arguments passed by
-// the user on the command line.
-const int MAX_ARGS = 256;
+const int MAX_ARGS = 256;       //maximum array size
 
-enum PipeStatus {PIPE, NOPIPE};
+enum PipeStatus {PIPE, NOPIPE}; //assign the enumirator of PIPE if '|' is found otherwise NOPIPE 
 
-// Splits a user's command into two commands, or a command and a file name.
-PipeStatus parse_command(int, char**, char**, char**);
+PipeStatus parse_command(int, char**, char**, char**);  //allows to use a pipe or just a filename
 
-// Pipes the first command's output into the second.
-void pipe_cmd(char**, char**);
+void pipe_cmd(char**, char**);  //pipes the output of the first program onto the second program
 
-// Reads input from the user into the given array and returns the number of
-// arguments taken in.
-int read_args(char**);
+int read_args(char**);          //takes userInput into an array and returns the num of arguments 
 
-// Redirects the output from the given command into the given file.
-void redirect_cmd(char**, char**);
+void run_cmd(int, char**);      //takes in the number of arguments and the array of args. runs the args
 
-// Given the number of arguments and an array of arguments, this will execute
-// those arguments.  The first argument in the array should be a command.
-void run_cmd(int, char**);
-
-// Given a string of user input, this will determine if the user wants to
-// quit the shell.
-bool want_to_quit(string);
+bool want_to_quit(string);      //exit condition
