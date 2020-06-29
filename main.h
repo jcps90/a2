@@ -4,7 +4,7 @@ Users: cssc2147, cssc2160
 Class: CS 570, Summer 2020
 Assignment 2
 Filename: main.h
-/*
+*/
 
 #include <iostream>
 #include <stdio.h>
