@@ -1,12 +1,12 @@
 #ifndef MSH_H
 #define MSH_H
 
-#include "FileHandler.h"
 //#include "FileHandler.h"
+#include "FileFunctions.h"
 // ^ already includes: 
 //  <string.h>
 
-#include <dirent.h>
+//#include <dirent.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -14,9 +14,10 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <cstddef>
+//#include <cstddef>
 
 #define MAXCHAR 256
+#define BUFFSIZE 64
 
 // We found that we cannot actually clear the console, but we can modify
 // the cursor. To do this, we use the escape sequence \0033 followed by
@@ -28,11 +29,17 @@ using namespace std;
 
 class msh{
     public:
-
         //public variables
         char* currentUser;
         string currentDir;
-        char userInput[MAXCHAR];
+
+        char userInput[256];
+        char lhBuff[BUFFSIZE];
+        char rhBuff[BUFFSIZE];
+        char rhBuffer[64];
+        int pipeLocation[32];
+        int pipeCounter;
+        int currentPipe = 1;
 
         // public constructor
         msh();
@@ -44,9 +51,18 @@ class msh{
         
         //private functions
         void initShell();
-    int recieveInput(char *userInput);
+        void clearUserInput();
+        int recieveInput(char *userInput);
+        void pipeCount();
+        void caseOne();
+        void caseTwo();
+        void caseThree();
+
+        int caseDecider();
 
     void setCWD();
 };
 
 #endif
+
+

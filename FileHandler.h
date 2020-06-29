@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <dirent.h>
 #include <iterator>
-#include <string>
+#include <string.h>
 #include <vector>
 #include <unistd.h>
 #include <sys/stat.h>
@@ -19,14 +19,22 @@ class FileHandler{
     public:
         string nFilePath;
         string fileName;
-        
+        string nul;
+
+        string pathname = nFilePath;
+        string fName = fileName;
+
+        const char * c = pathname.c_str();
+        const char * f = fName.c_str();
+
         void fileNameGet (char array[], int arrSize);
         void filePathGet (char array[], int arrSize);
-        int  filePathCheck (string dir);
+        void execCheck(char array[]);
 
-    private:
+        //int  filePathCheck (string dir);
 
-    string path;
+
+
 
 };
 

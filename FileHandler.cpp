@@ -5,29 +5,67 @@ void FileHandler::fileNameGet (char array[], int arrSize){
     int counter;     //see if input has a file with an executable extension
     for(counter = 0; counter < arrSize; counter++){
         if(array[counter] == NULL){ 
-            while( array[counter-1] != '/' || array[counter-1] != NULL ){
+            while( array[counter-1] != '/' || array[counter-1] != NULL || array[counter-1] != ' '){
                 fileName = array[counter-1];   //if executable extension is found gets the filename + its extension
                 counter--;
                 }
             return;  
         }
     }
+    cout << fileName << "fileNameGet Finished\n";
 }//fileExec
 
 
 void FileHandler::filePathGet (char array[], int arrSize){       //see if the array has "/" in it
     for(int counter = 0; counter < arrSize; counter++){
         if(array[counter] == '/'){
-            for (int i = 0; i < arrSize; i++){              //if it does then entered item is file path and needs 
+            cout << counter;
+            for (int i = 0; i < arrSize; i++){
+                cout << i;              //if it does then entered item is file path and needs 
                 nFilePath = nFilePath + array[i];           //to replace the default file path
                                                             //if "\" is found file path gets replaced and breaks out of loop
             }
         }
     }
+    cout << nFilePath << "filePathGet Finished\n";
 }//filePath
 
 
+// Check and Execute non-piped files and/or directories
+void FileHandler :: execCheck(char array[]){
+    if( nFilePath != nul){
+        if(execv(c, (char **)array) < 0){   //check *path
+            cout << "Directory does not exist!";
+        } 
+    } else{
+        if(execvp(f, (char **)array) < 0){ //check *file
+            cout << "File does not exist!";
+        }
+    }
+}//execCheck
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 int FileHandler :: filePathCheck(string dir) {
 	DIR *fDir;
 	
@@ -71,3 +109,4 @@ int FileHandler :: filePathCheck(string dir) {
 	return 0;
     }//filePathChecker
 }
+*/

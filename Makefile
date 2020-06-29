@@ -3,7 +3,7 @@
 # Authors: Juan Pina-Sanz, Mikhail Mineev
 # Users: cssc2147, cssc2160
 # Class: CS 570, Summer 2020
-# Assignment 1
+# Assignment 2
 # Filename: Makefile
 #
 #######################################################
@@ -14,5 +14,5 @@ $(EXEC):
 	rm -f *.o
 clean:
 	rm msh
-	rm -f *.o core a.out $(EXEC)
+	rm -f *.o $(EXEC)
 ####################[ EOF: Makefile ]##################
