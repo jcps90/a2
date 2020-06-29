@@ -21,7 +21,7 @@ int main() {                                                          //takes an
     if (pipe_status == PIPE)                                          //PIPE
       pipeCmd(lhBuff, rhBuff);
     else
-      runCmd(argc, userInput);                                        //NOPIPE
+      runCmd(userInput);                                        //NOPIPE
                                                                       
     for (int i=0; i<argc; i++)                                        //resets userInput for the next input
       userInput[i] = NULL;

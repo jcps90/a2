@@ -108,7 +108,7 @@ int readArgs(char **userInput){
 }
 
 // For single input of arguments this will fork a new process and run those arguments.
-void runCmd(int argc, char** userInput){
+void runCmd(char** userInput){
   pid_t pid;
 
   // Fork process

@@ -27,7 +27,7 @@ PipeStatus parseCommand(int, char**, char**, char**);  //allows to use a pipe or
 
 int readArgs(char**);         //reads in userInput into an array and returns the num or arg elements
 
-void runCmd(int, char**);     //given number of args and the args array will execute the arguments 
+void runCmd(char**);     //given number of args and the args array will execute the arguments 
 
 bool quitShell(string);        //given an input will see if user wants to quit from the microshell
 
