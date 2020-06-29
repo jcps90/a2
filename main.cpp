@@ -9,7 +9,7 @@ Filename: main.cpp
 #include "main.h"
 
 int main() {                                                          //takes and runs userInput until the user enters the 'quit' command
-  char *userInput[MAXCHAR], *lhBufF[MAXCHAR], *rhBuff[MAXCHAR];
+  char *userInput[MAXCHAR], *lhBuff[MAXCHAR], *rhBuff[MAXCHAR];
   PipeStatus pipe_status;
   int argc;
 
