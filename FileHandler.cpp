@@ -8,16 +8,15 @@ Filename: FileFunctions.cpp
 
 #include "main.h"
 
-// Given the number of arguments (argc) in an array of arguments (argv), this
-// will go through those arguments and, if necessary, bifurcate the arguments
-// into arrays cmd1 and cmd2.  It will return a PipeRedirect enum representing
-// whether there was a pipe in the command, a redirect to a file, or neither.
-// cmd1 and cmd2 will only be populated if there was a pipe or a redirect.
+// Based on the number of arguments and the size of the argument array we
+// will go through those arguments and update the status of the Pipe
+// to whether there is a pipe to a file, or none.
+// cmd1 and cmd2 will only be populated if there is a pipe.
 PipeStatus parse_command(int argc, char** argv, char** cmd1, char** cmd2) {
-  // Assume no pipe or redirect will be found.
+  // Start by assuming there are no pipes
   PipeStatus result = NOPIPE;
 
-  // Will hold the index of argv where the pipe or redirect is found.
+  // split will keep track of where the pipe is located.
   int split = -1;
 
   // Go through the array of arguments...
